@@ -36,7 +36,7 @@ def booths_radix_4(rs, rt, rd):
     val_bit_len = 6
     reg_max_len = val_bit_len*2
 
-    # Sign extend the values until we get 12 bits
+    # Sign extend the values until we get 12/13 bits including pad bit
     # A is the multiplicand; B is the multiplier
     A = zero_extend(rs, rs_len,reg_max_len) + integerToBinary(rs, '{:b}')+"0"
     B = integerToBinary(rt, '{:0'+str(val_bit_len)+'b}') + zero_extend(rt, val_bit_len, reg_max_len+1)
@@ -65,25 +65,22 @@ def booths_radix_4(rs, rt, rd):
         if pad == "001" or pad == "010":
             print("\tA = (A+B)")
             A = int(A,2) + int(B,2)
-            A = sign_extend(A, bitLen(A), reg_max_len+1, reg_max_len+1) + integerToBinary(A, '{:b}')
-            print("\tA = %s" % A)
         elif pad == "011":
             print("\tA = (A+2*B)")
             A = int(A,2) + int(B2,2)
-            A = sign_extend(A, bitLen(A), reg_max_len+1, reg_max_len+1) + integerToBinary(A, '{:b}')
-            print("\tA = %s" % A)
         elif pad == "100":
             print("\tA = (A-2*B)")
             A = int(A,2) + int(negB2,2)
-            A = sign_extend(A, bitLen(A), reg_max_len+1, reg_max_len+1) + integerToBinary(A, '{:b}')
-            print("\tA = %s" % A)
         elif pad == "101" or pad == "110":
             print("\tA = (A-B)")
             A = int(A,2) + int(negB,2)
-            A = sign_extend(A, bitLen(A), reg_max_len+1, reg_max_len+1) + integerToBinary(A, '{:b}')
-            print("\tA = %s" % A)
+        else: # pad == 111 || pad == 000
+            A = int(A,2)
+
+        A = sign_extend(A, bitLen(A), reg_max_len+1, reg_max_len+1) + integerToBinary(A, '{:b}')
         # Clear carry bit if it exists
         A = A[1:] if bitLen(int(A,2)) > reg_max_len+1 else A
+        print("\tA = %s" % A)
 
         # Keep track of sign for later extension
         A = int(A,2)

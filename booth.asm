@@ -20,7 +20,7 @@
 # breaks on 31 * 26
 #######################
 
-li $r1, 0x22                # multiplicand into r1
+li $r1, 0x04                # multiplicand into r1
 li $r2, 0x05                # multiplier into r2 
 li $r7, 0x01                # sets shift register
 sll $r3, $r2, $r7           # r3 = r2 << 1
