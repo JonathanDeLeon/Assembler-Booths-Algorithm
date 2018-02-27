@@ -10,7 +10,7 @@ from collections import OrderedDict
 from common_booth import *
 
 # Declare global variables
-object_file = "booth.obj"
+object_file = "bin/booth.obj"
 op_keys = opcodes.keys()
 funct_keys = functs.keys()
 reg_keys = registers.keys()
@@ -28,8 +28,8 @@ def pretty_print_registers():
 # Execute Booth's algorithm given 3 register values
 def booths_radix_4(rs, rt, rd):
     # Calculate bit length of both values
-    rs_len = bitLen(rs) 
-    rt_len = bitLen(rt)
+    rs_len = bit_len(rs)
+    rt_len = bit_len(rt)
 
     # Multiplicand and Multiplier values can only be 6 bits
     # Result is a maximum of 12 bits
@@ -38,11 +38,11 @@ def booths_radix_4(rs, rt, rd):
 
     # Sign extend the values until we get 12/13 bits including pad bit
     # A is the multiplicand; B is the multiplier
-    A = zero_extend(rs, rs_len,reg_max_len) + integerToBinary(rs, '{:b}')+"0"
-    B = integerToBinary(rt, '{:0'+str(val_bit_len)+'b}') + zero_extend(rt, val_bit_len, reg_max_len+1)
-    B2 = integerToBinary(reg_map['r3'], '{:0'+str(val_bit_len)+'b}') + zero_extend(rt, val_bit_len, reg_max_len+1)
-    negB = integerToBinary(twosComplement(rt), '{:0'+str(val_bit_len)+'b}') + zero_extend(rt, val_bit_len, reg_max_len+1)
-    negB2 = integerToBinary(twosComplement(reg_map['r3']), '{:0'+str(val_bit_len)+'b}') + zero_extend(rt, val_bit_len, reg_max_len+1)
+    A = zero_extend(rs, rs_len,reg_max_len) + integer_to_binary(rs, '{:b}') + "0"
+    B = integer_to_binary(rt, '{:0' + str(val_bit_len) + 'b}') + zero_extend(rt, val_bit_len, reg_max_len + 1)
+    B2 = integer_to_binary(reg_map['r3'], '{:0' + str(val_bit_len) + 'b}') + zero_extend(rt, val_bit_len, reg_max_len + 1)
+    negB = integer_to_binary(twos_complement(rt), '{:0' + str(val_bit_len) + 'b}') + zero_extend(rt, val_bit_len, reg_max_len + 1)
+    negB2 = integer_to_binary(twos_complement(reg_map['r3']), '{:0' + str(val_bit_len) + 'b}') + zero_extend(rt, val_bit_len, reg_max_len + 1)
 
     # Log/Display variables used for Booth's algorithm
     print("Variables:")
@@ -77,22 +77,22 @@ def booths_radix_4(rs, rt, rd):
         else: # pad == 111 || pad == 000
             A = int(A,2)
 
-        A = sign_extend(A, bitLen(A), reg_max_len+1, reg_max_len+1) + integerToBinary(A, '{:b}')
+        A = sign_extend(A, bit_len(A), reg_max_len + 1, reg_max_len + 1) + integer_to_binary(A, '{:b}')
         # Clear carry bit if it exists
-        A = A[1:] if bitLen(int(A,2)) > reg_max_len+1 else A
+        A = A[1:] if bit_len(int(A, 2)) > reg_max_len + 1 else A
         print("\tA = %s" % A)
 
         # Keep track of sign for later extension
         A = int(A,2)
-        msbSigned = isMSBSigned(A, reg_max_len+1)
+        msbSigned = is_MSB_signed(A, reg_max_len + 1)
 
         print("\tA = A >> 2")
         A = A >> 2
 
         if msbSigned:
-            A = one_extend(A, bitLen(A), reg_max_len+1) + integerToBinary(A, '{:b}')
+            A = one_extend(A, bit_len(A), reg_max_len + 1) + integer_to_binary(A, '{:b}')
         else:
-            A = zero_extend(A, bitLen(A), reg_max_len+1) + integerToBinary(A, '{:b}')
+            A = zero_extend(A, bit_len(A), reg_max_len + 1) + integer_to_binary(A, '{:b}')
         print("\tA = %s\n" % A)
         cycle +=1
 

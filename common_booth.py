@@ -51,15 +51,15 @@ def unsigned_to_signed(value, bit_length = immed_bit_length):
     return signed
 
 # apply twos complement to any value 
-def twosComplement(value):
+def twos_complement(value):
     return (2**immed_bit_length) - value
 
 # displays integer in 16 bit binary form
-def integerToBinary(i, form):
+def integer_to_binary(i, form):
     return form.format(i)
 
 # counts actual bit length of a python integer
-def bitLen(int_type):
+def bit_len(int_type):
     length = 0
     while (int_type):
         int_type >>= 1
@@ -67,7 +67,7 @@ def bitLen(int_type):
     return(length)
 
 # checks if most significant bit is signed
-def isMSBSigned(value, bit_len):
+def is_MSB_signed(value, bit_len):
     return True if(value & (1 << (bit_len-1))) != 0 else False
 
 # Returns the signed extended max_len - bit_len times 
