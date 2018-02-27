@@ -64,17 +64,20 @@ def bitLen(int_type):
     while (int_type):
         int_type >>= 1
         length += 1
-    return(length)         
-# checks for signed bit
+    return(length)
+
+# checks if most significant bit is signed
 def isMSBSigned(value, bit_len):
-    return True if(value & (1 << (bit_len-1))) != 0 else False 
+    return True if(value & (1 << (bit_len-1))) != 0 else False
+
 # Returns the signed extended max_len - bit_len times 
 def sign_extend(value, bit_len, s_len, max_len):
     sign_bit = value & 1 << (s_len - 1)
     sign_bit = 1 if sign_bit != 0 else 0
-    return "".join([str(sign_bit)] * (max_len-bit_len)) 
+    return "".join([str(sign_bit)] * (max_len-bit_len))
+
 # Returns zero extended max_len - bit_len times 
 def zero_extend(value, bit_len, max_len):
-    return "".join([str(0)] * (max_len-bit_len)) 
+    return "".join([str(0)] * (max_len-bit_len))
 def one_extend(value, bit_len, max_len):
     return "".join([str(1)] * (max_len-bit_len)) 
