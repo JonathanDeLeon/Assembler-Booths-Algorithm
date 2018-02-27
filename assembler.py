@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 '''
 assembler.py
+1) Reads booth.asm assembly instructions line by line
+2) Matches line based on regex type
+3) Outputs binary representation of instruction
 '''
 import sys
 import re

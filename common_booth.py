@@ -1,13 +1,13 @@
 '''
 Common_booth.py
-Commons global variables and methods 
-used in both algorithm and assembler
+Common global variables and methods used in both algorithm and assembler
 '''
 total_bit_length = 16
 op_bit_length = 4
 r_bit_length = 3
 funct_bit_length = 3 
 immed_bit_length = 6
+
 # opcodes are 4-bits
 # rtype opcode defaults to 0
 opcodes = {
